@@ -35,17 +35,23 @@
 
         (cond
 
-          [(= (length listaInterna 1) 1) ;Significa que ele leu algo como: "a"
-
-
+          [(= (length listaInterna) 1) ;Significa que ele leu algo como: "a"
+           (define aresta (list-ref listaInterna 0)) ;Coloco na variável "aresta" o valor q está na lista interna
+           (display estadoAtual) ;Só coloquei pra dar sorte mesmo
+           
+           (define vizinhos (get-neighbors g estadoAtual)) ;Coloco na variável "vizinhos" todos os vértices que são vizinhos ao nó atual
+           (display vizinhos)
           ]
 
-          [(= (length listaInterna 1) 2) ;Significa que ele leu algo como: "a*"
-
+          [(= (length listaInterna) 2) ;Significa que ele leu algo como: "a*"
+           (define aresta (list-ref listaInterna 0))
+           (display "wololo")
           ]
           
-          [(= (length listaInterna 1) 3) ;Significa que ele leu algo como: "aUb"
-
+          [(= (length listaInterna) 3) ;Significa que ele leu algo como: "aUb"
+           (define aresta1 (list-ref listaInterna 0))
+           (define aresta2 (list-ref listaInterna 2))
+           (display "wololo")
           ]
         )
         
