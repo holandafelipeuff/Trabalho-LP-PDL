@@ -1,15 +1,17 @@
 #lang racket
 (require graph)
 
-(define g (weighted-graph/directed '((a x y) (b y z))))
+(define g (weighted-graph/directed '((a x y) (a x z) (b y z))))
 
-(define pdl "a;b")
-
+(define pdl "a;b;")
 
 (define (fazTransicaoGrafo programaPDL i grafo listaInterna estadoAtual verticesPossiveis j)
-  (if (= (length verticesPossiveis) j)
-      (void)
-      (verificaPDLGrafo programaPDL i grafo '() (list-ref verticesPossiveis j))
+  (cond
+    [(= (length verticesPossiveis) j)
+     (void)]
+    [(not (= (length verticesPossiveis) j))
+     (verificaPDLGrafo programaPDL i grafo '() (list-ref verticesPossiveis j))
+     (fazTransicaoGrafo programaPDL i grafo listaInterna estadoAtual verticesPossiveis (+ j 1))]
   )
 )
 
@@ -68,9 +70,9 @@
            (cond 
      
              [(= (length verticesPossiveis) 0)
-                (display "Temos um problema pois não há transição no vertice ")
+                (display "\nTemos um problema pois não há transição no vertice ")
                 (display estadoAtual)
-                (display "usando a transição ")
+                (display " usando a transição ")
                 (display aresta)
               ]
 
@@ -98,7 +100,7 @@
     ]
 
     [(= (string-length programaPDL) i)
-         (display "DEU BOM")
+         (display " DEU BOM ")
      ]
   )
 )
