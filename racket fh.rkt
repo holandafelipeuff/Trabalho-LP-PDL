@@ -5,6 +5,14 @@
 
 (define pdl "a;b")
 
+
+(define (fazTransicaoGrafo programaPDL i grafo listaInterna estadoAtual verticesPossiveis j)
+  (if (= (length verticesPossiveis) j)
+      (void)
+      (verificaPDLGrafo programaPDL i grafo '() (list-ref verticesPossiveis j))
+  )
+)
+
 (define (verificaPossiveisVertices grafo estadoAtual aresta vizinhos i listaVerticesPossiveis)
   (if (= (length vizinhos) i)
       listaVerticesPossiveis
@@ -17,7 +25,10 @@
 )
 
 (define (verificaPDLGrafo programaPDL i grafo listaInterna estadoAtual)
-  
+  (cond
+
+    [(not (= (string-length programaPDL) i))
+    
     (cond 
      
       [(char=? (string-ref programaPDL i) #\a) ;Se o caractere na posição atual é igual a "a"
@@ -53,6 +64,20 @@
 
            (define verticesPossiveis (verificaPossiveisVertices grafo estadoAtual aresta vizinhos 0 '()))
            (display verticesPossiveis)
+
+           (cond 
+     
+             [(= (length verticesPossiveis) 0)
+                (display "Temos um problema pois não há transição no vertice ")
+                (display estadoAtual)
+                (display "usando a transição ")
+                (display aresta)
+              ]
+
+             [(not (= (length verticesPossiveis) 0))
+                (fazTransicaoGrafo programaPDL (+ i 1) grafo listaInterna estadoAtual verticesPossiveis 0)
+              ]
+            )
           ]
 
           [(= (length listaInterna) 2) ;Significa que ele leu algo como: "a*"
@@ -70,5 +95,10 @@
       ]
    
     )
-  
+    ]
+
+    [(= (string-length programaPDL) i)
+         (display "DEU BOM")
+     ]
+  )
 )
