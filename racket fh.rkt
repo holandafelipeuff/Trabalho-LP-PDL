@@ -91,9 +91,34 @@
           ]
           
           [(= (length listaInterna) 3) ;Significa que ele leu algo como: "aUb"
-           (define aresta1 (list-ref listaInterna 0))
-           (define aresta2 (list-ref listaInterna 2))
-           (display "wololo")
+			   (define aresta1 (list-ref listaInterna 0))
+			   (define aresta2 (list-ref listaInterna 2))
+			   
+			   (define vizinhos (get-neighbors grafo estadoAtual)) ;Coloco na variável "vizinhos" todos os vértices que são vizinhos ao nó atual
+			   (display vizinhos)
+
+			   (define verticesPossiveis1 (verificaPossiveisVertices grafo estadoAtual aresta1 vizinhos 0 '()))
+			   (display verticesPossiveis1)
+
+			   (define verticesPossiveis2 (verificaPossiveisVertices grafo estadoAtual aresta2 vizinhos 0 '()))
+			   (display verticesPossiveis2)
+
+			   (cond
+					[(and (= (length verticesPossiveis1) 0) (= (length verticesPossiveis2) 0))
+						(display "Temos um problema pois não há transição no vertice ")
+						(display estadoAtual)
+						(display "usando a transição ")
+						(display aresta1)
+						(display " U ")
+						(display aresta2)
+					 ]
+					[(not(= (length verticesPossiveis1) 0))
+						 (fazTransicaoGrafo programaPDL (+ i 1) grafo listaInterna estadoAtual verticesPossiveis1 0)  
+					 ]
+					[(not(= (length verticesPossiveis2) 0))
+						 (fazTransicaoGrafo programaPDL (+ i 1) grafo listaInterna estadoAtual verticesPossiveis2 0)  
+					 ]
+			   )
           ]
         )
         
