@@ -6,21 +6,14 @@
 (define pdl "a;b")
 
 (define (verificaPossiveisVertices grafo estadoAtual aresta vizinhos i listaVerticesPossiveis)
-  (display i)
-  (display (edge-weight grafo estadoAtual (list-ref vizinhos i)))
-  (display aresta)
-  (display (equal? (edge-weight grafo estadoAtual (list-ref vizinhos i)) aresta))
   (if (= (length vizinhos) i)
       listaVerticesPossiveis
-      (if (equal? (edge-weight grafo estadoAtual (list-ref vizinhos i)) aresta)
-             ;(set! listaVerticesPossiveis (append listaVerticesPossiveis (list(list-ref vizinhos i))))
-             ;(display (equal? (edge-weight grafo estadoAtual (list-ref vizinhos i)) aresta))
+      (if (equal? (edge-weight grafo estadoAtual (list-ref vizinhos i)) (string->symbol (string aresta)))
           (verificaPossiveisVertices grafo estadoAtual aresta vizinhos (+ i 1) (append listaVerticesPossiveis (list(list-ref vizinhos i))))
           (verificaPossiveisVertices grafo estadoAtual aresta vizinhos (+ i 1) listaVerticesPossiveis)
 
        )
   )
-  ;verificaPossiveisVertices grafo estadoAtual aresta vizinhos (+ i 1) listaVerticesPossiveis
 )
 
 (define (verificaPDLGrafo programaPDL i grafo listaInterna estadoAtual)
