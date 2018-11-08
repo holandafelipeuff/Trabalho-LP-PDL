@@ -1,10 +1,12 @@
 #lang racket
 (require graph)
 
+;DEFINIÇÕES PARA TESTES
 (define g (weighted-graph/directed '((a x y) (a x z) (b y z))))
 
 (define pdl "a;b;")
 
+;FUNÇÕES AUXILIARES
 (define (fazTransicaoGrafo programaPDL i grafo listaInterna estadoAtual verticesPossiveis j)
   (cond
     [(= (length verticesPossiveis) j)
@@ -26,6 +28,7 @@
   )
 )
 
+;PROGRAMA PRINCIPAL
 (define (verificaPDLGrafo programaPDL i grafo listaInterna estadoAtual)
   (cond
 
@@ -61,7 +64,7 @@
            (define aresta (list-ref listaInterna 0)) ;Coloco na variável "aresta" o valor q está na lista interna
            (display aresta)
            
-           (define vizinhos (get-neighbors g estadoAtual)) ;Coloco na variável "vizinhos" todos os vértices que são vizinhos ao nó atual
+           (define vizinhos (get-neighbors grafo estadoAtual)) ;Coloco na variável "vizinhos" todos os vértices que são vizinhos ao nó atual
            (display vizinhos)
 
            (define verticesPossiveis (verificaPossiveisVertices grafo estadoAtual aresta vizinhos 0 '()))
@@ -70,7 +73,7 @@
            (cond 
      
              [(= (length verticesPossiveis) 0)
-                (display "\nTemos um problema pois não há transição no vertice ")
+                (display "Temos um problema pois não há transição no vertice ")
                 (display estadoAtual)
                 (display " usando a transição ")
                 (display aresta)
@@ -100,7 +103,7 @@
     ]
 
     [(= (string-length programaPDL) i)
-         (display " DEU BOM ")
+         (display "DEU BOM")
      ]
   )
 )
