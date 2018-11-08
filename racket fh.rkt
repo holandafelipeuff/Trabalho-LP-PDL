@@ -6,6 +6,20 @@
 
 (define pdl "a;b")
 
+(define (verificaPossiveisVertices grafo estadoAtual aresta vizinhos i listaVerticesPossiveis)
+  (if (= (length vizinhos) i)
+      (listaVerticesPossiveis)
+      (
+         (if (= (edge-weight grafo estadoAtual (lista-ref vizinhos i)) aresta)
+             (set! listaVerticesPossiveis (append listaVerticesPossiveis (list(lista-ref vizinhos i))))
+         )
+       )
+  )
+  
+  
+
+)
+
 (define (verificaPDLGrafo programaPDL i grafo listaInterna estadoAtual)
   
     (cond 
@@ -37,10 +51,11 @@
 
           [(= (length listaInterna) 1) ;Significa que ele leu algo como: "a"
            (define aresta (list-ref listaInterna 0)) ;Coloco na variável "aresta" o valor q está na lista interna
-           (display estadoAtual) ;Só coloquei pra dar sorte mesmo
            
            (define vizinhos (get-neighbors g estadoAtual)) ;Coloco na variável "vizinhos" todos os vértices que são vizinhos ao nó atual
            (display vizinhos)
+
+           (define verticesPossiveis (verificaPossiveisVertices (grafo estadoAtual aresta vizinhos 0 '())))
           ]
 
           [(= (length listaInterna) 2) ;Significa que ele leu algo como: "a*"
