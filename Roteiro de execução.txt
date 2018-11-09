@@ -1,0 +1,25 @@
+Roteiro de execução - Trabalho Linguagens de Programação
+Grupo: Felipe Holanda de Souza, João Gabriel Lisboa Machado e Lucas de Castro Lopes
+
+O programa foi escrito no DrRacket e recomenda-se usá-lo para os testes.
+Para a execução dos testes:
+
+1. A entrada é do formato (verificaPDLGrafo programaPDL i grafo listaInterna estadoAtual), onde:
+	- programaPDL é uma string que representa o programa PDL desejado (o último caractere do programa deve ser, obrigatoriamente, um ";")
+	- i é um valor que permite a iteração recursiva do programa, deve-se entrar com o valor 0
+	- grafo é o grafo a ser verificado, deve-se entrar um grafo no formato (weighted-graph/directed '((a x y))), onde a é o rótulo da aresta e x e y são vértices (a ordem é importante; neste caso, representa x->y)
+	- listaInterna deve ser uma lista vazia, no formato '(), para que seja efetuada a leitura do programa
+	- estadoAtual é o estado de onde parte a execução do programa
+
+2. Para executar o programa:
+	- Abrir código-fonte (trabalho_pdl.rkt ou trabalho_pdl_comentado.rkt) no DrRacket
+	- O arquivo Testes.txt contém uma série de casos de teste. Para executá-los basta copiar e colar cada linha individualmente no terminal de entrada do Racket.
+	- A saída terá o seguinte formato:
+
+		exemplo: programa "a;b" e grafo x-(a)->y-(b)->z, começando no vértice x
+		a(y)(y)b(z)(z) (a e b são os rótulos, os símbolos entre parênteses seguintes a eles representam todos os vizinhos do vértice vigente e os próximos símbolos entre parênteses representam os vizinhos que são atingíveis através do rótulo do estado anterior)
+		DEU BOM (isso significa que o programa rodou de maneira satisfatória)
+
+		exemplo de erro: programa "a;b" e grafo x-(a)->y-(b)->z, começando no vértice y
+		a(z)() (vizinhos que possuam o rótulo a não existem)
+		Temos um problema pois não há transição no vertice y usando a transição a (o programa aponta o local do erro)
