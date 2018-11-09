@@ -2,133 +2,140 @@
 (require graph)
 
 ;DEFINIÇÕES PARA TESTES
-(define g (weighted-graph/directed '((a x y) (a x z) (b y z))))
+(define g (weighted-graph/directed '((a x y) (b x z))))
 
 (define pdl "a;b;")
 
 ;FUNÇÕES AUXILIARES
 (define (fazTransicaoGrafo programaPDL i grafo listaInterna estadoAtual verticesPossiveis j)
-  (cond
-    [(= (length verticesPossiveis) j)
-     (void)]
-    [(not (= (length verticesPossiveis) j))
-     (verificaPDLGrafo programaPDL i grafo '() (list-ref verticesPossiveis j))
-     (fazTransicaoGrafo programaPDL i grafo listaInterna estadoAtual verticesPossiveis (+ j 1))]
-  )
+	(cond
+		[(= (length verticesPossiveis) j)
+			(void)
+		]
+		[(not (= (length verticesPossiveis) j))
+			(verificaPDLGrafo programaPDL i grafo '() (list-ref verticesPossiveis j))
+			(fazTransicaoGrafo programaPDL i grafo listaInterna estadoAtual verticesPossiveis (+ j 1))
+		]
+	)
 )
 
 (define (verificaPossiveisVertices grafo estadoAtual aresta vizinhos i listaVerticesPossiveis)
-  (if (= (length vizinhos) i)
-      listaVerticesPossiveis
-      (if (equal? (edge-weight grafo estadoAtual (list-ref vizinhos i)) (string->symbol (string aresta)))
-          (verificaPossiveisVertices grafo estadoAtual aresta vizinhos (+ i 1) (append listaVerticesPossiveis (list(list-ref vizinhos i))))
-          (verificaPossiveisVertices grafo estadoAtual aresta vizinhos (+ i 1) listaVerticesPossiveis)
+	(if (= (length vizinhos) i)
+		listaVerticesPossiveis
+		(if (equal? (edge-weight grafo estadoAtual (list-ref vizinhos i)) (string->symbol (string aresta)))
+			(verificaPossiveisVertices grafo estadoAtual aresta vizinhos (+ i 1) (append listaVerticesPossiveis (list(list-ref vizinhos i))))
+			(verificaPossiveisVertices grafo estadoAtual aresta vizinhos (+ i 1) listaVerticesPossiveis)
 
-       )
-  )
+		)
+	)
 )
 
 ;PROGRAMA PRINCIPAL
 (define (verificaPDLGrafo programaPDL i grafo listaInterna estadoAtual)
-  (cond
+	(cond
 
-    [(not (= (string-length programaPDL) i))
-    
-    (cond 
-     
-      [(char=? (string-ref programaPDL i) #\a) ;Se o caractere na posição atual é igual a "a"
-        (set! listaInterna (append listaInterna (list(string-ref programaPDL i)))) ;Coloca no final da listaInterna o valor achado
-        (verificaPDLGrafo programaPDL (+ i 1) grafo listaInterna estadoAtual)
-      ]
+		[(not (= (string-length programaPDL) i))
+		
+			(cond 
+			 
+				[(char=? (string-ref programaPDL i) #\a) ;Se o caractere na posição atual é igual a "a"
+					(set! listaInterna (append listaInterna (list(string-ref programaPDL i)))) ;Coloca no final da listaInterna o valor achado
+					(verificaPDLGrafo programaPDL (+ i 1) grafo listaInterna estadoAtual)
+				]
 
-      [(char=? (string-ref programaPDL i) #\b) ;Se o caractere na posição atual é igual a "b"
-        (set! listaInterna (append listaInterna (list(string-ref programaPDL i)))) ;Coloca no final da listaInterna o valor achado
-        (verificaPDLGrafo programaPDL (+ i 1) grafo listaInterna estadoAtual)
-      ]
+				[(char=? (string-ref programaPDL i) #\b) ;Se o caractere na posição atual é igual a "b"
+					(set! listaInterna (append listaInterna (list(string-ref programaPDL i)))) ;Coloca no final da listaInterna o valor achado
+					(verificaPDLGrafo programaPDL (+ i 1) grafo listaInterna estadoAtual)
+				]
 
-      [(char=? (string-ref programaPDL i) #\U) ;Se o caractere na posição atual é igual a "U"
-        (set! listaInterna (append listaInterna (list(string-ref programaPDL i)))) ;Coloca no final da listaInterna o valor achado
-        (verificaPDLGrafo programaPDL (+ i 1) grafo listaInterna estadoAtual)
-      ]
+				[(char=? (string-ref programaPDL i) #\U) ;Se o caractere na posição atual é igual a "U"
+					(set! listaInterna (append listaInterna (list(string-ref programaPDL i)))) ;Coloca no final da listaInterna o valor achado
+					(verificaPDLGrafo programaPDL (+ i 1) grafo listaInterna estadoAtual)
+				]
 
-      [(char=? (string-ref programaPDL i) #\*) ;Se o caractere na posição atual é igual a "*"
-        (set! listaInterna (append listaInterna (list(string-ref programaPDL i)))) ;Coloca no final da listaInterna o valor achado
-        (verificaPDLGrafo programaPDL (+ i 1) grafo listaInterna estadoAtual)
-      ]
+				[(char=? (string-ref programaPDL i) #\*) ;Se o caractere na posição atual é igual a "*"
+					(set! listaInterna (append listaInterna (list(string-ref programaPDL i)))) ;Coloca no final da listaInterna o valor achado
+					(verificaPDLGrafo programaPDL (+ i 1) grafo listaInterna estadoAtual)
+				]
 
-      [(char=? (string-ref programaPDL i) #\;) ;Se o caractere na posição atual é igual a ";"
+				[(char=? (string-ref programaPDL i) #\;) ;Se o caractere na posição atual é igual a ";"
 
-        (cond
+					(cond
 
-          [(= (length listaInterna) 1) ;Significa que ele leu algo como: "a"
-           (define aresta (list-ref listaInterna 0)) ;Coloco na variável "aresta" o valor q está na lista interna
-           (display aresta)
-           
-           (define vizinhos (get-neighbors grafo estadoAtual)) ;Coloco na variável "vizinhos" todos os vértices que são vizinhos ao nó atual
-           (display vizinhos)
+						[(= (length listaInterna) 1) ;Significa que ele leu algo como: "a"
+							(define aresta (list-ref listaInterna 0)) ;Coloco na variável "aresta" o valor q está na lista interna
+							(display aresta)
+					   
+							(define vizinhos (get-neighbors grafo estadoAtual)) ;Coloco na variável "vizinhos" todos os vértices que são vizinhos ao nó atual
+							(display vizinhos)
 
-           (define verticesPossiveis (verificaPossiveisVertices grafo estadoAtual aresta vizinhos 0 '()))
-           (display verticesPossiveis)
+							(define verticesPossiveis (verificaPossiveisVertices grafo estadoAtual aresta vizinhos 0 '()))
+							(display verticesPossiveis)
 
-           (cond 
-     
-             [(= (length verticesPossiveis) 0)
-                (display "Temos um problema pois não há transição no vertice ")
-                (display estadoAtual)
-                (display " usando a transição ")
-                (display aresta)
-              ]
+							(cond 
+				 
+								[(= (length verticesPossiveis) 0)
+									(display "Temos um problema pois não há transição no vertice ")
+									(display estadoAtual)
+									(display " usando a transição ")
+									(display aresta)
+								]
 
-             [(not (= (length verticesPossiveis) 0))
-                (fazTransicaoGrafo programaPDL (+ i 1) grafo listaInterna estadoAtual verticesPossiveis 0)
-              ]
-            )
-          ]
+								[(not (= (length verticesPossiveis) 0))
+									(fazTransicaoGrafo programaPDL (+ i 1) grafo listaInterna estadoAtual verticesPossiveis 0)
+								]
+							)
+						]
 
-          [(= (length listaInterna) 2) ;Significa que ele leu algo como: "a*"
-           (define aresta (list-ref listaInterna 0))
-           (display "wololo")
-          ]
-          
-          [(= (length listaInterna) 3) ;Significa que ele leu algo como: "aUb"
-			   (define aresta1 (list-ref listaInterna 0))
-			   (define aresta2 (list-ref listaInterna 2))
-			   
-			   (define vizinhos (get-neighbors grafo estadoAtual)) ;Coloco na variável "vizinhos" todos os vértices que são vizinhos ao nó atual
-			   (display vizinhos)
+						[(= (length listaInterna) 2) ;Significa que ele leu algo como: "a*"
+						   (define aresta (list-ref listaInterna 0))
+						   (display "wololo")
+						]
+					  
+						[(= (length listaInterna) 3) ;Significa que ele leu algo como: "aUb"
+							(define aresta1 (list-ref listaInterna 0))
+							(define aresta2 (list-ref listaInterna 2))
+							   
+							(define vizinhos (get-neighbors grafo estadoAtual)) ;Coloco na variável "vizinhos" todos os vértices que são vizinhos ao nó atual
+							(display vizinhos)
 
-			   (define verticesPossiveis1 (verificaPossiveisVertices grafo estadoAtual aresta1 vizinhos 0 '()))
-			   (display verticesPossiveis1)
+							(define verticesPossiveis1 (verificaPossiveisVertices grafo estadoAtual aresta1 vizinhos 0 '()))
+							(display verticesPossiveis1)
 
-			   (define verticesPossiveis2 (verificaPossiveisVertices grafo estadoAtual aresta2 vizinhos 0 '()))
-			   (display verticesPossiveis2)
+							(define verticesPossiveis2 (verificaPossiveisVertices grafo estadoAtual aresta2 vizinhos 0 '()))
+							(display verticesPossiveis2)
 
-			   (cond
-					[(and (= (length verticesPossiveis1) 0) (= (length verticesPossiveis2) 0))
-						(display "Temos um problema pois não há transição no vertice ")
-						(display estadoAtual)
-						(display "usando a transição ")
-						(display aresta1)
-						(display " U ")
-						(display aresta2)
-					 ]
-					[(not(= (length verticesPossiveis1) 0))
-						 (fazTransicaoGrafo programaPDL (+ i 1) grafo listaInterna estadoAtual verticesPossiveis1 0)  
-					 ]
-					[(not(= (length verticesPossiveis2) 0))
-						 (fazTransicaoGrafo programaPDL (+ i 1) grafo listaInterna estadoAtual verticesPossiveis2 0)  
-					 ]
-			   )
-          ]
-        )
-        
-      ]
-   
-    )
-    ]
+							(cond
+								[(and (= (length verticesPossiveis1) 0) (= (length verticesPossiveis2) 0))
+									(display "Temos um problema pois não há transição no vertice ")
+									(display estadoAtual)
+									(display "usando a transição ")
+									(display aresta1)
+									(display " U ")
+									(display aresta2)
+								]
+								
+								[(and (not(= (length verticesPossiveis1) 0)) (not(= (length verticesPossiveis2) 0)))
+									(fazTransicaoGrafo programaPDL (+ i 1) grafo listaInterna estadoAtual verticesPossiveis1 0)
+                                    (fazTransicaoGrafo programaPDL (+ i 1) grafo listaInterna estadoAtual verticesPossiveis2 0) 
+								]
 
-    [(= (string-length programaPDL) i)
-         (display "DEU BOM")
-     ]
-  )
+								[(not(= (length verticesPossiveis1) 0))
+									(fazTransicaoGrafo programaPDL (+ i 1) grafo listaInterna estadoAtual verticesPossiveis1 0)  
+								]
+								
+								[(not(= (length verticesPossiveis2) 0))
+                                    (fazTransicaoGrafo programaPDL (+ i 1) grafo listaInterna estadoAtual verticesPossiveis2 0)  
+								]
+							)
+						]
+					)	
+				]  
+			)
+		]
+
+		[(= (string-length programaPDL) i)
+			(display "DEU BOM")
+		]
+	)
 )
