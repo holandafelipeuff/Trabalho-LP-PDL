@@ -159,11 +159,29 @@
 								]
 
 								[(not(= (length verticesPossiveis1) 0))
-									(fazTransicaoGrafo programaPDL (+ i 1) grafo listaInterna estadoAtual verticesPossiveis1 0)  
+									(fazTransicaoGrafo programaPDL (+ i 1) grafo listaInterna estadoAtual verticesPossiveis1 0) 
+
+									(display "\nTemos um problema pois não há transição no vertice ")
+									(display estadoAtual)
+									(display " usando a transição ")
+									(display aresta2)
+									(display " da transição ")
+									(display aresta1)
+									(display " U ")
+									(display aresta2)									
 								]
 								
 								[(not(= (length verticesPossiveis2) 0))
                                     (fazTransicaoGrafo programaPDL (+ i 1) grafo listaInterna estadoAtual verticesPossiveis2 0)  
+									
+									(display "\nTemos um problema pois não há transição no vertice ")
+									(display estadoAtual)
+									(display " usando a transição ")
+									(display aresta1)
+									(display " da transição ")
+									(display aresta1)
+									(display " U ")
+									(display aresta2)
 								]
 							)
 						]
