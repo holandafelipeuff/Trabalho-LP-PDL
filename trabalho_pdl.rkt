@@ -2,7 +2,7 @@
 (require graph)
 
 ;DEFINIÇÕES PARA TESTES
-(define g (weighted-graph/directed '((a x y) (b x z))))
+(define g (weighted-graph/directed '((a x y) (b y z)))) 
 
 (define pdl "a;b;")
 
@@ -60,6 +60,11 @@
 					(verificaPDLGrafo programaPDL (+ i 1) grafo listaInterna estadoAtual)
 				]
 
+                                [(char=? (string-ref programaPDL i) #\c) ;Se o caractere na posição atual é igual a "c"
+					(set! listaInterna (append listaInterna (list(string-ref programaPDL i)))) ;Coloca no final da listaInterna o valor achado
+					(verificaPDLGrafo programaPDL (+ i 1) grafo listaInterna estadoAtual)
+				]
+
 				[(char=? (string-ref programaPDL i) #\U) ;Se o caractere na posição atual é igual a "U"
 					(set! listaInterna (append listaInterna (list(string-ref programaPDL i)))) ;Coloca no final da listaInterna o valor achado
 					(verificaPDLGrafo programaPDL (+ i 1) grafo listaInterna estadoAtual)
@@ -87,7 +92,7 @@
 							(cond 
 				 
 								[(= (length verticesPossiveis) 0)
-									(display "Temos um problema pois não há transição no vertice ")
+									(display "\nTemos um problema pois não há transição no vertice ")
 									(display estadoAtual)
 									(display " usando a transição ")
 									(display aresta)
@@ -112,7 +117,7 @@
                             (cond 
 				 
 								[(= (length verticesPossiveis) 0)
-									(display "Temos um problema pois não há transição no vertice ")
+									(display "\nTemos um problema pois não há transição no vertice ")
 									(display estadoAtual)
 									(display " usando a transição ")
 									(display aresta)
@@ -140,9 +145,9 @@
 
 							(cond
 								[(and (= (length verticesPossiveis1) 0) (= (length verticesPossiveis2) 0))
-									(display "Temos um problema pois não há transição no vertice ")
+									(display "\nTemos um problema pois não há transição no vertice ")
 									(display estadoAtual)
-									(display "usando a transição ")
+									(display " usando a transição ")
 									(display aresta1)
 									(display " U ")
 									(display aresta2)
@@ -168,7 +173,7 @@
 		]
 
 		[(= (string-length programaPDL) i)
-			(display "DEU BOM")
+			(display "\nDEU BOM")
 		]
 	)
 )

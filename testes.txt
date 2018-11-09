@@ -1,0 +1,9 @@
+Testes de execução do programa
+
+(verificaPDLGrafo "a;b;" 0 (weighted-graph/directed '((a x y) (b y z))) '() 'x)
+(verificaPDLGrafo "a;b;" 0 (weighted-graph/directed '((a x y) (b y z))) '() 'y)
+(verificaPDLGrafo "aUb;" 0 (weighted-graph/directed '((a x y) (b x z))) '() 'x)
+(verificaPDLGrafo "a;" 0 (weighted-graph/directed '((a x y) (b x z))) '() 'x)
+(verificaPDLGrafo "a*;" 0 (weighted-graph/directed '((a x x))) '() 'x)
+(verificaPDLGrafo "aUb;c;" 0 (weighted-graph/directed '((a x y) (b x z) (c y k))) '() 'x)
+(verificaPDLGrafo "a;b;c;" 0 (weighted-graph/directed '((a x y) (b y z) (c z k))) '() 'x)

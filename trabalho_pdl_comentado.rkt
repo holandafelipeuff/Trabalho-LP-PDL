@@ -4,7 +4,7 @@
 ;DEFINIÇÕES PARA TESTES
 
 ;Definição de um grafo direcionado com peso nas arestas (vem do próprio Racket)
-(define g (weighted-graph/directed '((a x y) (b x z)))) 
+(define g (weighted-graph/directed '((a x y) (b y z)))) 
 
 ;Definição de um programa PDL (lembrando que todos os testes de programas PDL no nosso programa precisa terminar com ";"
 (define pdl "a;b;")
@@ -86,10 +86,15 @@
 					(verificaPDLGrafo programaPDL (+ i 1) grafo listaInterna estadoAtual)
 				]
 
-				;Fazemos a mesma lógica para "b", "U" e "*"
+				;Fazemos a mesma lógica para "b", "c", "U" e "*"
 				
 				[(char=? (string-ref programaPDL i) #\b) 
 					(set! listaInterna (append listaInterna (list(string-ref programaPDL i)))) 
+					(verificaPDLGrafo programaPDL (+ i 1) grafo listaInterna estadoAtual)
+				]
+
+                                [(char=? (string-ref programaPDL i) #\c)
+					(set! listaInterna (append listaInterna (list(string-ref programaPDL i))))
 					(verificaPDLGrafo programaPDL (+ i 1) grafo listaInterna estadoAtual)
 				]
 
@@ -130,7 +135,7 @@
 								
 								;Se a lista VerticesPossiveis estiver vazia, deu ruim
 								[(= (length verticesPossiveis) 0)
-									(display "Temos um problema pois não há transição no vertice ")
+									(display "\nTemos um problema pois não há transição no vertice ")
 									(display estadoAtual)
 									(display " usando a transição ")
 									(display aresta)
@@ -161,7 +166,7 @@
                             (cond 
 								;Se a lista VerticesPossiveis estiver vazia, deu ruim
 								[(= (length verticesPossiveis) 0)
-									(display "Temos um problema pois não há transição no vertice ")
+									(display "\nTemos um problema pois não há transição no vertice ")
 									(display estadoAtual)
 									(display " usando a transição ")
 									(display aresta)
@@ -196,9 +201,9 @@
 							(cond
 								;se ambas as listas estão vazias, então deu ruim
 								[(and (= (length verticesPossiveis1) 0) (= (length verticesPossiveis2) 0))
-									(display "Temos um problema pois não há transição no vertice ")
+									(display "\nTemos um problema pois não há transição no vertice ")
 									(display estadoAtual)
-									(display "usando a transição ")
+									(display " usando a transição ")
 									(display aresta1)
 									(display " U ")
 									(display aresta2)
@@ -229,7 +234,7 @@
 		;certo, logo, o grafo consegue transcrever o programa PDL em uma de suas execuções
 		[(= (string-length programaPDL) i)
 			;Deu Bom :D
-			(display "DEU BOM")
+			(display "\nDEU BOM")
 		]
 	)
 )
